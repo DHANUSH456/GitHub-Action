@@ -26,7 +26,7 @@ jobs:
 
       - name: Check the environment variable and run if true
         run: |
-          echo "MY_VAR=$env:MY_VAR"
+          Write-Host "MY_VAR=$env:MY_VAR"
           if ($env:MY_VAR -eq 'true') {
             Write-Host "Success:true"
           } elseif ($env:MY_VAR -eq 'false') {
