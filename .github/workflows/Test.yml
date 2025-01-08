@@ -37,7 +37,7 @@ jobs:
     - name: Printing Skip stage
       run: |
         Write-Host "SKIPSTAGE: $env:SKIPSTAGE"
-    
+
     - name: Skip Stage
       if: ${{ env.SKIPSTAGE == 'false' }}
       run: Write-Host "SUCCESS"
