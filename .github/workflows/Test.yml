@@ -16,15 +16,14 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-      - name: Set environment variable using env key in job
-        env:
-          MY_VAR: "false"
+      - name: Set environment variable based on input
         run: |
           if ('${{ github.event.inputs.is_minor_branch }}' -eq 'true') {
-            $env:MY_VAR = "true"
+            echo "MY_VAR=true" >> $GITHUB_ENV
+          } else {
+            echo "MY_VAR=false" >> $GITHUB_ENV
           }
-          Write-Host "MY_VAR=$env:MY_VAR"
       
-      - name: Use the environment variable in next step
+      - name: Check the environment variable and run if true
         if: ${{ env.MY_VAR == 'true' }}
         run: Write-Host "Success"
