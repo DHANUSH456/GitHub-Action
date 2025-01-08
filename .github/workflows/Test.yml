@@ -27,4 +27,4 @@ jobs:
       
       - name: Use the environment variable in next step
         run: |
-          Write-Host "MY_VAR=$env:MY_VAR"
+          Write-Host "MY_VAR=${{ env.MY_VAR }}"
