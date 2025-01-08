@@ -27,10 +27,12 @@ jobs:
 
     - name: Validate User Input
       run: |
+        # Check if the input value is 'true'
         if ("${{ github.event.inputs.is_minor_branch }}" -eq "true") {
-          echo "SKIPSTAGE=true" >> $GITHUB_ENV
+          echo "SKIPSTAGE=true" >> $GITHUB_ENV  # Set SKIPSTAGE to true
+        } else {
+          echo "SKIPSTAGE=false" >> $GITHUB_ENV  # Ensure SKIPSTAGE is false if not 'true'
         }
-        echo "SKIPSTAGE=${{ env.SKIPSTAGE }}"
 
     - name: Printing Skip stage
       run: |
