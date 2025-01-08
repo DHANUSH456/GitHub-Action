@@ -26,5 +26,5 @@ jobs:
           Write-Host "MY_VAR=$env:MY_VAR"
       
       - name: Use the environment variable in next step
-        if: ${{ env.MY_VAR == "true" }}
+        if: ${{ env.MY_VAR == 'true' }}
         run: Write-Host "Success"
