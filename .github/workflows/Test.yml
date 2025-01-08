@@ -30,10 +30,11 @@ jobs:
         if ("${{ github.event.inputs.is_minor_branch }}" -eq "true") {
           echo "SKIPSTAGE=true" >> $GITHUB_ENV
         }
+        echo "SKIPSTAGE=${{ env.SKIPSTAGE }}"
 
     - name: Printing Skip stage
       run: |
-        Write-Host "${{ env.SKIPSTAGE }}"
+        Write-Host "SKIPSTAGE: $env:SKIPSTAGE"
     
     - name: Skip Stage
       if: ${{ env.SKIPSTAGE == 'false' }}
