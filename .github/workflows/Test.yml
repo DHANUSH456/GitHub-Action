@@ -35,3 +35,7 @@ jobs:
       run: |
         Write-Host "${{ env.skipStage }}"
         Write-Host "$env:skipStage"
+    
+    - name: Skip Stage
+      if: ${{ env.skipStage == 'false' }}
+      run: Write-Host "SUCCESS"
