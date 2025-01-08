@@ -20,7 +20,7 @@ jobs:
         env:
           MY_VAR: "false"
         run: |
-          if ('${{ env.IS_MINOR_BRANCH }}' -eq 'true') {
+          if ('${{ github.event.inputs.is_minor_branch }}' -eq 'true') {
             MY_VAR="true"
           }
           echo "MY_VAR=$MY_VAR"
