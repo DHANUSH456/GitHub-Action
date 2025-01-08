@@ -1,16 +1,16 @@
 name: Test
 
 on:
-    workflow_dispatch:
-        inputs:
-            is_minor_branch:
-                description: 'Is Minor Branch'
-                required: true
-                default: 'false'
-                type: choice
-                options:
-                    - 'true'
-                    - 'false'
+  workflow_dispatch:
+    inputs:
+      is_minor_branch:
+        description: 'Is Minor Branch'
+        required: true
+        default: 'false'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
 
 jobs:
   build:
@@ -21,9 +21,10 @@ jobs:
           MY_VAR: "false"
         run: |
           if ('${{ github.event.inputs.is_minor_branch }}' -eq 'true') {
-            MY_VAR="true"
+            $env:MY_VAR = "true"
           }
-          echo "MY_VAR=$MY_VAR"
+          Write-Host "MY_VAR=$env:MY_VAR"
       
-      - name: Set environment variable using env key in step
-        run: Write-Host "${{ env.MY_VAR }}"
+      - name: Use the environment variable in next step
+        run: |
+          Write-Host "MY_VAR=$env:MY_VAR"
