@@ -29,5 +29,6 @@ jobs:
           echo "::set-output name=branch_found::$SkipStage"
 
       - name: Display the result of the branch search
+        if: ${{ steps.check_branch.outputs.branch_found == 'True' }}
         run: |
           echo "The branch_found value is: ${{ steps.check_branch.outputs.branch_found }}"
