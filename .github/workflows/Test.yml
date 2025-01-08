@@ -26,7 +26,7 @@ jobs:
 
       - name: Check the environment variable and run if true
         run: |
-          if($MY_VAR == 'true'){
+          if($MY_VAR -eq 'true'){
             Write-Host "Success"
           } else{
             Write-Host "Connectivity KO"
