@@ -18,12 +18,12 @@ jobs:
     steps:
       - name: Set environment variable based on input
         run: |
-          if ('${{ github.event.inputs.is_minor_branch }}' -eq 'true') {
+          if ('${{ inputs.is_minor_branch }}' == 'true') {
             echo "MY_VAR=true" >> $GITHUB_ENV
           } else {
             echo "MY_VAR=false" >> $GITHUB_ENV
           }
-      
+
       - name: Check the environment variable and run if true
         if: ${{ env.MY_VAR == 'true' }}
         run: Write-Host "Success"
