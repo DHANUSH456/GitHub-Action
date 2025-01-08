@@ -25,5 +25,5 @@ jobs:
           }
 
       - name: Check the environment variable and run if true
-        if: ${{ env.MY_VAR == 'true' }}
-        run: Write-Host "Success"
+        run: |
+          Write-Host "Success:${{ env.MY_VAR }}"
