@@ -15,23 +15,19 @@ on:
 jobs:
   build:
     runs-on: windows-latest
-    steps:
-      - name: Set environment variable based on input
-        run: |
-          if ('${{ github.event.inputs.is_minor_branch }}' -eq 'true') {
-            echo "MY_VAR=true" >> $GITHUB_ENV
-          } else {
-            echo "MY_VAR=false" >> $GITHUB_ENV
-          }
+    outputs:
+      branch_found: ${{ steps.check_branch.outputs.branch_found }}
 
-      - name: Check the environment variable and run if true
+    steps:
+      - name: Check if the branch exists in the repository
+        id: check_branch
         run: |
-          Write-Host "MY_VAR=$env:MY_VAR"
-          if ($env:MY_VAR -eq 'true') {
-            Write-Host "Success:true"
-          } elseif ($env:MY_VAR -eq 'false') {
-            Write-Host "Success:false"
-          } else {
-            Write-Host "Failed"
+          $SkipStage = $false
+          if('${{ env.IS_MINOR_BRANCH }}' -eq 'true'){
+            $SkipStage = $true
           }
-        shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+          echo "::set-output name=branch_found::$SkipStage"
+
+      - name: Display the result of the branch search
+        run: |
+          echo "The branch_found value is: ${{ steps.check_branch.outputs.branch_found }}"
