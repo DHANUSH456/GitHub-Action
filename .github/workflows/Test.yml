@@ -23,7 +23,7 @@ jobs:
         id: check_branch
         run: |
           $SkipStage = $false
-          if('${{ env.IS_MINOR_BRANCH }}' -eq 'true'){
+          if('${{ github.event.inputs.is_minor_branch }}' -eq 'true'){
             $SkipStage = $true
           }
           echo "::set-output name=branch_found::$SkipStage"
