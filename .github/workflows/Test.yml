@@ -18,11 +18,12 @@ jobs:
     steps:
       - name: Set environment variable using env key in job
         env:
-          MY_VAR: "some_value"
+          MY_VAR: "false"
         run: |
+          if ('${{ env.IS_MINOR_BRANCH }}' -eq 'true') {
+            MY_VAR="true"
+          }
           echo "MY_VAR=$MY_VAR"
       
       - name: Set environment variable using env key in step
-        run: |
-          MY_VAR="another_value"
-          echo "MY_VAR=$MY_VAR"
+        run: Write-Host "${{ env.MY_VAR }}"
