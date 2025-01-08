@@ -1,43 +1,14 @@
-name: Test
-
-on:
-    workflow_dispatch:
-        inputs:
-            is_minor_branch:
-                description: 'Is Minor Branch'
-                required: true
-                default: 'false'
-                type: choice
-                options:
-                    - 'true'
-                    - 'false'
-
 jobs:
-  Test:
-    runs-on: windows-latest
-    env:
-        SKIPSTAGE: 'false'  # Initial value set at the start
-
+  build:
+    runs-on: ubuntu-latest
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4
-
-    - name: Clean workspace
-      run: Remove-Item -Recurse -Force *.* -ErrorAction Ignore
-
-    - name: Validate User Input
-      run: |
-        # Check if the input value is 'true'
-        if ("${{ github.event.inputs.is_minor_branch }}" -eq "true") {
-          echo "SKIPSTAGE=true" >> $GITHUB_ENV  # Set SKIPSTAGE to true
-        } else {
-          echo "SKIPSTAGE=false" >> $GITHUB_ENV  # Ensure SKIPSTAGE is false if not 'true'
-        }
-
-    - name: Printing Skip stage
-      run: |
-        Write-Host "SKIPSTAGE: $env:SKIPSTAGE"
-
-    - name: Skip Stage
-      if: ${{ env.SKIPSTAGE == 'false' }}
-      run: Write-Host "SUCCESS"
+      - name: Set environment variable using env key in job
+        env:
+          MY_VAR: "Test"
+        run: |
+          echo "MY_VAR=$MY_VAR"
+      
+      - name: Set environment variable using env key in step
+        run: |
+          MY_VAR="another_value"
+          echo "MY_VAR=$MY_VAR"
