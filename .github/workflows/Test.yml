@@ -31,7 +31,7 @@ jobs:
         }
         echo "skipStage=$skipStage" >> $GITHUB_ENV
 
-    -name: Printing Skip stage
-     run : |
+    - name: Printing Skip stage
+      run : |
         Write-Host "${{ env.skipStage }}"
         Write-Host "$env.skipStage"
