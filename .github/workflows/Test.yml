@@ -15,6 +15,8 @@ on:
 jobs:
   Test:
     runs-on: windows-latest
+    env:
+        SKIPSTAGE: 'false'  # Initial value set at the start
 
     steps:
     - name: Checkout Repository
@@ -25,16 +27,14 @@ jobs:
 
     - name: Validate User Input
       run: |
-        echo "skipStage=false" >> $GITHUB_ENV
         if ("${{ github.event.inputs.is_minor_branch }}" -eq 'true') {
-          echo "skipStage=true" >> $GITHUB_ENV
+          echo "SKIPSTAGE=true" >> $GITHUB_ENV
         }
 
     - name: Printing Skip stage
       run: |
-        Write-Host "${{ env.skipStage }}"
-        Write-Host "$env:skipStage"
+        Write-Host "${{ env.SKIPSTAGE }}"
     
     - name: Skip Stage
-      if: ${{ env.skipStage == 'false' }}
+      if: ${{ env.SKIPSTAGE == 'false' }}
       run: Write-Host "SUCCESS"
