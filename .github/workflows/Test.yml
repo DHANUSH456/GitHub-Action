@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: Set environment variable based on input
         run: |
-          if (${{ github.event.inputs.is_minor_branch }} -eq 'true') {
+          if ('${{ github.event.inputs.is_minor_branch }}' -eq 'true') {
             echo "MY_VAR=true" >> $GITHUB_ENV
           } else {
             echo "MY_VAR=false" >> $GITHUB_ENV
@@ -26,6 +26,7 @@ jobs:
 
       - name: Check the environment variable and run if true
         run: |
+          echo "MY_VAR=$env:MY_VAR"
           if ($env:MY_VAR -eq 'true') {
             Write-Host "Success:true"
           } elseif ($env:MY_VAR -eq 'false') {
@@ -33,3 +34,4 @@ jobs:
           } else {
             Write-Host "Failed"
           }
+        shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
