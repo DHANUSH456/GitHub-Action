@@ -15,8 +15,8 @@ on:
 jobs:
   build:
     runs-on: windows-latest
-    outputs:
-      branch_found: ${{ steps.check_branch.outputs.branch_found }}
+#    outputs:
+#      branch_found: ${{ steps.check_branch.outputs.branch_found }}
 
     steps:
       - name: Check if the branch exists in the repository
@@ -29,7 +29,7 @@ jobs:
           echo "::set-output name=branch_found::$SkipStage"
 
       - name: Display the result of the branch search
-        if: ${{ env.branch_found == 'false' }}
+        if: ${{ steps.check_branch.outputs.branch_found == 'False' }}
         run: |
           echo "The branch_found value is: ${{ steps.check_branch.outputs.branch_found }}"
 
