@@ -29,6 +29,31 @@ jobs:
           echo "::set-output name=branch_found::$SkipStage"
 
       - name: Display the result of the branch search
-        if: ${{ steps.check_branch.outputs.branch_found == 'True' }}
+        if: ${{ env.branch_found == 'false' }}
         run: |
           echo "The branch_found value is: ${{ steps.check_branch.outputs.branch_found }}"
+
+          $branchFound = $false  # Initialize the branchFound variable to false
+          
+          # Retrieve the list of branches matching the pattern
+          $branchesList = git ls-remote --heads ${{ env.REPOSITORY_XSTORE }} | Select-String -Pattern ${{ env.NEW_BRANCH_VERSION }}
+          
+          foreach ($item in $branchesList) {
+            if (-not $branchFound -and $item.ToString().Trim().EndsWith("refs/heads/${{ env.NEW_BRANCH_VERSION }}")) {
+              Write-Host "Branch exists"
+              $branchFound = $true  # Update the flag when branch is found
+              break
+            }
+          }
+          
+          # If the branch was found, stop the workflow early
+          if ($branchFound -eq $true) {
+            Write-Host "Branch found... stopping early"
+            exit 1
+          }
+
+          Write-Host "Branch not found, continuing the workflow"
+          
+          # Set the branchFound value as an output for the job
+          echo "::set-output name=branch_found::$branchFound"
+
