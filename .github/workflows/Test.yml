@@ -20,16 +20,15 @@ jobs:
 
     steps:
       - name: Check if the branch exists in the repository
-        id: check_branch
         run: |
           $SkipStage = $false
           if('${{ github.event.inputs.is_minor_branch }}' -eq 'true'){
             $SkipStage = $true
           }
-          echo "::set-output name=branch_found::$SkipStage"
+          echo "branch_found=$branchFound" >> $GITHUB_ENV
 
       - name: Display the result of the branch search
-        if: ${{ steps.check_branch.outputs.branch_found == 'False' }}
+        if: ${{ env.branch_found == 'False' }}
         run: |
           echo "The branch_found value is: ${{ steps.check_branch.outputs.branch_found }}"
 
