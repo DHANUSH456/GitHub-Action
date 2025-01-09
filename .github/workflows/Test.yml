@@ -20,7 +20,6 @@ jobs:
 
     steps:
       - name: Check if the branch exists in the repository
-        id: check_branch
         run: |
           $SkipStage = $false
           if('${{ github.event.inputs.is_minor_branch }}' -eq 'true'){
