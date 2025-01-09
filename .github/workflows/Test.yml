@@ -25,7 +25,7 @@ jobs:
           if('${{ github.event.inputs.is_minor_branch }}' -eq 'true'){
             $SkipStage = $true
           }
-          echo "branch_found=$branchFound" >> $GITHUB_ENV
+          echo "branch_found=$SkipStage" >> $GITHUB_ENV
 
       - name: Display the result of the branch search
         if: ${{ env.branch_found == 'False' }}
